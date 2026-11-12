@@ -31,13 +31,24 @@ def run(mode, src, dst, key_file):
     cmd = [openssl(), "enc", "-aes-256-cbc", "-pbkdf2", "-salt", "-in", src, "-out", dst]
     if mode == "decrypt":
         cmd.insert(2, "-d")
+    tmp = None
     if key_file:
         cmd += ["-pass", "file:" + key_file]
-    elif os.environ.get("VOICE_KEY"):
-        cmd += ["-pass", "env:VOICE_KEY"]
+    elif os.environ.get("VOICE_KEY", "").strip():
+        # openssl's env: form takes the value byte-for-byte, so a secret pasted with a trailing
+        # newline fails with "bad decrypt". Normalise through a private temp file instead.
+        import tempfile
+        fd, tmp = tempfile.mkstemp(prefix="voice_key_")
+        with os.fdopen(fd, "w") as f:
+            f.write(os.environ["VOICE_KEY"].strip())
+        cmd += ["-pass", "file:" + tmp]
     else:
         return False
-    subprocess.run(cmd, check=True)
+    try:
+        subprocess.run(cmd, check=True)
+    finally:
+        if tmp:
+            os.unlink(tmp)
     return True
 
 
