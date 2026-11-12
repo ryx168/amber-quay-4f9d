@@ -28,9 +28,18 @@ With the secret present the workflow clones that voice; without it, `build.py` f
 OmniVoice *voice design* using `voice.instruct_fallback` in `script.json`, so a fork still renders.
 
 ```
-python voice_tool.py encrypt --key-file /path/to/key.txt   # re-encrypt a new reference clip
+python voice_tool.py encrypt --key-file /path/to/key.txt   # re-encrypt a new reference clip (creates the key file if missing)
 python voice_tool.py decrypt --key-file /path/to/key.txt   # local decrypt
 ```
+
+The passphrase file is kept outside every repository (on the owner's PC:
+`%USERPROFILE%\.config\amber-quay-4f9d\VOICE_KEY.txt`). Lose it and the `.enc` is unreadable;
+re-run `encrypt` from the original recording with a new key and update the secret.
+
+`assets/vo/*.wav` are the synthesized lines, committed so a layout-only change does not
+re-synthesize (CPU OmniVoice runs at roughly a minute per second of speech on a 4-core runner).
+The file name carries a hash of voice mode + text, so editing a `vo` line in `script.json`
+regenerates just that line on the next run.
 
 `voice/ref_text.txt` is the transcript of the reference clip; shipping it avoids a 1.5 GB
 Whisper download on the runner.

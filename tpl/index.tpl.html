@@ -31,17 +31,17 @@
       .cover { background: linear-gradient(90deg, rgba(5,12,40,.82) 0%, rgba(5,12,40,.55) 45%, rgba(5,12,40,.15) 100%); }
       .cover .ribbon { position: absolute; left: 90px; top: 150px; padding: 12px 34px; background: linear-gradient(90deg, var(--red2), var(--red)); color: var(--gold2); font-size: 34px; font-weight: 900; letter-spacing: .08em; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.6); opacity: 0; }
       .cover .ribbon b { color: #fff; font-size: 44px; margin: 0 6px; }
-      .cover .h1 { position: absolute; left: 90px; top: 250px; font-size: 118px; font-weight: 900; line-height: 1.1; letter-spacing: .02em; opacity: 0; }
-      .cover .h1 .n { font-size: 150px; color: var(--gold2); }
+      .cover .h1 { position: absolute; left: 90px; top: 250px; font-size: 100px; font-weight: 900; line-height: 1.1; letter-spacing: .02em; opacity: 0; white-space: nowrap; }
+      .cover .h1 .n { font-size: 128px; color: var(--gold2); }
       .cover .h2 { position: absolute; left: 96px; top: 420px; font-size: 44px; font-weight: 700; color: var(--cream); letter-spacing: .06em; text-shadow: 0 2px 10px rgba(0,0,0,.8); opacity: 0; }
       .cover .h2 span { color: var(--gold); margin-right: 14px; }
       .cover .pills { position: absolute; left: 96px; top: 520px; display: flex; gap: 14px; flex-wrap: wrap; width: 900px; opacity: 0; }
       .cover .pill { padding: 10px 24px; border: 2px solid var(--gold); border-radius: 999px; font-size: 30px; font-weight: 700; color: var(--gold2); background: rgba(0,0,0,.35); }
       .cover .date { position: absolute; left: 96px; top: 640px; font-size: 34px; color: var(--cream); letter-spacing: .08em; opacity: 0; }
       .cover .date b { color: var(--gold2); font-size: 42px; }
-      .cover .host { position: absolute; right: 120px; bottom: 0; width: 760px; height: 820px; opacity: 0; }
-      .cover .host img { position: absolute; right: 0; bottom: 0; height: 820px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
-      .cover .host .tag { position: absolute; left: -40px; bottom: 120px; background: linear-gradient(90deg, var(--red2), var(--red)); color: #fff; padding: 14px 30px; border-radius: 8px; font-size: 34px; font-weight: 900; box-shadow: 0 10px 30px rgba(0,0,0,.6); white-space: nowrap; }
+      .cover .host { position: absolute; right: 40px; bottom: 0; width: 700px; height: 700px; opacity: 0; }
+      .cover .host img { position: absolute; right: 0; bottom: 0; height: 700px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
+      .cover .host .tag { position: absolute; left: 20px; bottom: 100px; background: linear-gradient(90deg, var(--red2), var(--red)); color: #fff; padding: 14px 30px; border-radius: 8px; font-size: 34px; font-weight: 900; box-shadow: 0 10px 30px rgba(0,0,0,.6); white-space: nowrap; }
       .cover .host .tag small { display: block; font-size: 22px; font-weight: 500; color: var(--gold2); letter-spacing: .1em; }
 
       /* ---------- anniversary burst ---------- */
@@ -65,30 +65,30 @@
       /* ---------- price poster ---------- */
       .poster { background: linear-gradient(90deg, rgba(8,20,60,.92) 0%, rgba(8,20,60,.82) 55%, rgba(8,20,60,.25) 100%); }
       .poster .top { position: absolute; left: 0; top: 0; width: 1920px; height: 96px; background: linear-gradient(90deg, var(--red2), var(--red) 50%, var(--red2)); border-bottom: 4px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: var(--gold2); letter-spacing: .12em; opacity: 0; }
-      .poster .h1 { position: absolute; left: 90px; top: 130px; font-size: 92px; font-weight: 900; letter-spacing: .02em; opacity: 0; }
-      .poster .h1 .n { color: var(--gold2); font-size: 118px; }
-      .poster .h2 { position: absolute; left: 96px; top: 250px; font-size: 36px; color: var(--cream); letter-spacing: .08em; opacity: 0; }
+      .poster .h1 { position: absolute; left: 90px; top: 118px; font-size: 78px; font-weight: 900; letter-spacing: .02em; opacity: 0; white-space: nowrap; line-height: 1.15; }
+      .poster .h1 .n { color: var(--gold2); font-size: 100px; }
+      .poster .h2 { position: absolute; left: 96px; top: 228px; font-size: 34px; color: var(--cream); letter-spacing: .08em; opacity: 0; }
       .poster .h2 span { color: var(--gold); margin-right: 10px; }
-      .poster .burst { position: absolute; left: 90px; top: 330px; width: 980px; display: flex; align-items: flex-end; gap: 26px; opacity: 0; }
+      .poster .burst { position: absolute; left: 90px; top: 290px; width: 980px; display: flex; align-items: flex-end; gap: 26px; opacity: 0; }
       .poster .burst .lbl { font-size: 54px; font-weight: 900; color: #fff; background: var(--red); padding: 10px 26px; border-radius: 12px; line-height: 1.1; text-align: center; }
       .poster .burst .amt { font-size: 200px; font-weight: 900; line-height: .9; color: var(--gold2); text-shadow: 0 4px 0 #7a4b00, 0 14px 40px rgba(0,0,0,.8); letter-spacing: -.02em; }
       .poster .burst .amt small { font-size: 70px; }
       .poster .burst .from { font-size: 56px; font-weight: 900; color: #fff; padding-bottom: 20px; }
-      .poster .incl { position: absolute; left: 96px; top: 575px; display: flex; gap: 16px; opacity: 0; }
+      .poster .incl { position: absolute; left: 96px; top: 525px; display: flex; gap: 16px; opacity: 0; }
       .poster .incl span { padding: 8px 22px; border: 2px solid var(--gold); border-radius: 999px; font-size: 30px; font-weight: 700; color: var(--gold2); background: rgba(0,0,0,.35); }
-      .poster .note { position: absolute; left: 96px; top: 650px; font-size: 30px; color: var(--cream); letter-spacing: .06em; opacity: 0; }
+      .poster .note { position: absolute; left: 96px; top: 596px; font-size: 30px; color: var(--cream); letter-spacing: .06em; opacity: 0; }
       .poster .note b { color: var(--gold2); }
-      .poster .cta { position: absolute; left: 90px; top: 720px; font-size: 54px; font-weight: 900; color: var(--gold2); letter-spacing: .08em; text-shadow: 0 3px 12px rgba(0,0,0,.8); opacity: 0; }
-      .poster .phone { position: absolute; left: 90px; top: 800px; display: flex; align-items: center; gap: 24px; opacity: 0; }
-      .poster .phone .ic { width: 90px; height: 90px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 48px; color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.6); }
-      .poster .phone .no { font-size: 108px; font-weight: 900; color: #fff; letter-spacing: .02em; text-shadow: 0 4px 0 var(--red2), 0 12px 30px rgba(0,0,0,.8); line-height: 1; }
-      .poster .phone .site { font-size: 30px; color: var(--cream); letter-spacing: .14em; margin-top: 8px; }
+      .poster .cta { position: absolute; left: 90px; top: 650px; font-size: 54px; font-weight: 900; color: var(--gold2); letter-spacing: .08em; text-shadow: 0 3px 12px rgba(0,0,0,.8); opacity: 0; }
+      .poster .phone { position: absolute; left: 90px; top: 728px; display: flex; align-items: center; gap: 24px; opacity: 0; }
+      .poster .phone .ic { width: 84px; height: 84px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 44px; color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+      .poster .phone .no { font-size: 100px; font-weight: 900; color: #fff; letter-spacing: .02em; text-shadow: 0 4px 0 var(--red2), 0 12px 30px rgba(0,0,0,.8); line-height: 1; }
+      .poster .phone .site { font-size: 28px; color: var(--cream); letter-spacing: .14em; margin-top: 6px; }
       .poster .phone .site b { color: var(--gold2); }
-      .poster .qr { position: absolute; left: 1010px; top: 800px; width: 190px; height: 190px; background: #fff; border-radius: 14px; padding: 10px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+      .poster .qr { position: absolute; left: 1000px; top: 712px; width: 170px; height: 170px; background: #fff; border-radius: 14px; padding: 10px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
       .poster .qr img { width: 100%; height: 100%; object-fit: contain; }
-      .poster .qr span { position: absolute; left: 0; right: 0; top: 196px; text-align: center; font-size: 20px; color: var(--cream); letter-spacing: .08em; white-space: nowrap; }
-      .poster .host { position: absolute; right: 60px; bottom: 0; height: 940px; opacity: 0; }
-      .poster .host img { height: 940px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
+      .poster .qr span { position: absolute; left: -20px; top: -34px; width: 210px; text-align: center; font-size: 20px; color: var(--cream); letter-spacing: .06em; white-space: nowrap; }
+      .poster .host { position: absolute; right: 30px; bottom: 0; height: 840px; opacity: 0; }
+      .poster .host img { height: 840px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
 
       /* ---------- subtitles ---------- */
       .sub { top: auto; bottom: 70px; left: 0; width: 1920px; height: auto; text-align: center; padding: 0 160px; opacity: 0; }
@@ -183,9 +183,9 @@
             '<div class="h2"><span>搭乘</span>' + T.ship + '</div>',
             '<div class="burst"><div class="lbl">驚爆<br>價格盤</div><div class="amt num"><small>$</small>' + T.price + '</div><div class="from">起</div></div>',
             '<div class="incl"><span>包機票</span><span>包船票</span><span>包陽台艙</span><span>包稅金</span></div>',
-            '<div class="note">雙人同房每位 · <b>' + T.depart + '</b></div>',
+            '<div class="note">雙人同房每位 · <b>' + T.depart + '</b> · 免付費 ' + T.tollfree + '</div>',
             '<div class="cta">名額有限 · 立即行動！</div>',
-            '<div class="phone"><div class="ic">☎</div><div><div class="no num">' + T.phone + '</div><div class="site">官方網站 <b>' + T.site + '</b>　（免付費 ' + T.tollfree + '）</div></div></div>',
+            '<div class="phone"><div class="ic">☎</div><div><div class="no num">' + T.phone + '</div><div class="site">官方網站 <b>' + T.site + '</b></div></div></div>',
             '<div class="qr"><img src="assets/presenter/qrcode.png"><span>手機掃描 · 線上報名</span></div>',
             '<div class="host"><img src="assets/presenter/presenter_cutout.png"></div>'
           ].join(""), start, (pEnd - start).toFixed(3), 10, "ov-" + s.id);
