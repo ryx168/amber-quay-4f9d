@@ -9,7 +9,7 @@ name: render
 on:
   push:
     branches: [main]
-    paths: [script.json, build.py, tpl/**, assets/**, voice/**, .github/workflows/render.yml]
+    paths: [script.json, build.py, voice_tool.py, tpl/**, assets/**, voice/**, .github/workflows/render.yml]
   workflow_dispatch:
     inputs:
       quality:
