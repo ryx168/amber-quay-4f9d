@@ -1,0 +1,9 @@
+out/
+assets/build/
+node_modules/
+__pycache__/
+*.log
+renders/
+index.html
+timing.json
+voice/ronnie_ref.wav

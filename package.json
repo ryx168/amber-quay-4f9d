@@ -1,0 +1,10 @@
+{
+  "name": "tour-7622-promo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.5.1 lint",
+    "render": "npx --yes hyperframes@0.5.1 render -q high -w 2 -o out/tour_7622_promo.mp4",
+    "render:draft": "npx --yes hyperframes@0.5.1 render -q draft -w 2 -o out/tour_7622_promo_draft.mp4"
+  }
+}

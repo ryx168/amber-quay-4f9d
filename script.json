@@ -1,0 +1,55 @@
+{
+  "tour": {
+    "id": "7622",
+    "brand": "新聯華假期 XO TOURS",
+    "title": "愛爾蘭與英倫 11 天精華之遊",
+    "ship": "盛世公主號 Majestic Princess",
+    "anniversary": "慶祝新聯華假期 32 週年",
+    "price": "4099",
+    "depart": "2027 年 3 月 29 日出發",
+    "phone": "626-618-0918",
+    "tollfree": "1-800-978-1788",
+    "site": "XOTOURS.NET",
+    "url": "https://www.xotours.net/7622/"
+  },
+  "voice": {
+    "language": "zh",
+    "speed": 1.05,
+    "instruct_fallback": "female, middle-aged, warm, enthusiastic, Taiwanese Mandarin accent, clear broadcast voice"
+  },
+  "shots": [
+    { "id": "cover",     "kind": "still",  "src": "photos/ship_sea.jpg",      "min": 5.0, "lead": 0.0, "pad": 0.0,
+      "overlay": "cover" },
+    { "id": "bigben",    "kind": "clip",   "src": "clips/bigben.mp4",         "min": 4.5, "lead": 0.3, "pad": 0.5,
+      "vo": "慶祝新聯華假期三十二週年！英倫愛爾蘭大優惠！", "sub": "慶祝新聯華假期 32 週年！英倫愛爾蘭大優惠！", "overlay": "anniv" },
+    { "id": "ship",      "kind": "clip",   "src": "clips/ship.mp4",           "min": 6.0, "lead": 0.2, "pad": 0.6,
+      "vo": "包機票！包船票！包陽台艙！包倫敦市內遊！只要四零九九起！", "sub": "包機票・包船票・包陽台艙・包倫敦市內遊，只要 $4099 起！", "overlay": "includes" },
+    { "id": "london",    "kind": "clip",   "src": "clips/london.mp4",         "min": 3.4, "lead": 0.2, "pad": 0.4,
+      "vo": "從倫敦出發，", "sub": "從倫敦出發，", "label": "倫敦 London" },
+    { "id": "cornwall",  "kind": "clip",   "src": "clips/cornwall.mp4",       "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "啟航前往充滿海岸風情的康瓦爾郡，", "sub": "啟航前往充滿海岸風情的康瓦爾郡，", "label": "康瓦爾郡 Cornwall" },
+    { "id": "cork",      "kind": "clip",   "src": "clips/cork.mp4",           "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "接著探訪愛爾蘭科克的歷史名勝。", "sub": "接著探訪愛爾蘭科克的歷史名勝。", "label": "科克 Cork" },
+    { "id": "dublin",    "kind": "clip",   "src": "clips/dublin.mp4",         "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "隨後造訪充滿活力的都柏林，", "sub": "隨後造訪充滿活力的都柏林，", "label": "都柏林 Dublin" },
+    { "id": "belfast",   "kind": "clip",   "src": "clips/belfast.mp4",        "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "並探索北愛爾蘭貝爾法斯特的豐富文化。", "sub": "並探索北愛爾蘭貝爾法斯特的豐富文化。", "label": "貝爾法斯特 Belfast" },
+    { "id": "liverpool", "kind": "clip",   "src": "clips/liverpool.mp4",      "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "再前往英國的音樂之都利物浦。", "sub": "再前往英國的音樂之都利物浦。", "label": "利物浦 Liverpool" },
+    { "id": "balcony",   "kind": "clip",   "src": "clips/ship_b.mp4",         "min": 3.8, "lead": 0.1, "pad": 0.4,
+      "vo": "全程尊享盛世公主號陽台艙，", "sub": "全程尊享盛世公主號陽台艙，", "label": "盛世公主號 Majestic Princess" },
+    { "id": "seaview",   "kind": "still",  "src": "photos/balcony.jpg",       "min": 3.6, "lead": 0.1, "pad": 0.4,
+      "vo": "為您帶來令人嘆為觀止的無敵海景，", "sub": "為您帶來令人嘆為觀止的無敵海景，", "label": "陽台艙 Balcony stateroom" },
+    { "id": "dining",    "kind": "still",  "src": "photos/dessert.jpg",       "min": 3.6, "lead": 0.1, "pad": 0.5,
+      "vo": "與極致的豐盛美食體驗。", "sub": "與極致的豐盛美食體驗。", "label": "郵輪美食 Dining" },
+    { "id": "price",     "kind": "still",  "src": "photos/ship_aerial_v.jpg", "min": 8.0, "lead": 0.4, "pad": 0.6,
+      "vo": "英倫愛爾蘭全包大優惠！三月二十九日出發，只要四零九九！", "sub": "英倫愛爾蘭全包大優惠！3 月 29 日出發，只要 $4099！", "overlay": "price" },
+    { "id": "cta",       "kind": "still",  "src": "photos/ship_aerial_v.jpg", "min": 6.5, "lead": 0.2, "pad": 2.8,
+      "vo": "立即訂位，名額有限，機會難得！", "sub": "立即訂位，名額有限，機會難得！", "overlay": "price" }
+  ],
+  "music": [
+    { "src": "music/intro_vocal.mp3", "from": "cover", "to": "ship",     "volume": 0.55, "fadeOut": 1.5 },
+    { "src": "music/bed.mp3",         "from": "london", "to": "dining",  "volume": 0.22, "fadeIn": 1.0, "fadeOut": 1.5 },
+    { "src": "music/outro.mp3",       "from": "price", "to": "cta",      "volume": 0.45, "fadeOut": 2.0 }
+  ]
+}
