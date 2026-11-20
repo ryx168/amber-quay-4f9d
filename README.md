@@ -36,6 +36,16 @@ The passphrase file is kept outside every repository (on the owner's PC:
 `%USERPROFILE%\.config\amber-quay-4f9d\VOICE_KEY.txt`). Lose it and the `.enc` is unreadable;
 re-run `encrypt` from the original recording with a new key and update the secret.
 
+### Pronunciation check
+
+OmniVoice samples randomly, so the same line can come out clean on one take and slurred on the
+next. Every line that gets synthesized is therefore transcribed by Whisper (large-v3-turbo) and
+scored on pinyin against the script (`tts_qa.py`). Homophones and simplified/traditional
+differences don't count as errors, and numerals are ignored. The first take at or under
+`TTS_QA_THRESHOLD` (0.10 = one wrong syllable in ten) is kept; otherwise the best of `takes`
+(default 3, a `Run workflow` input) wins. The scores go to `out/tts_qa.json`, which is attached
+to the release, and the release notes say which lines stayed above the threshold.
+
 `assets/vo/*.wav` are the synthesized lines, committed so a layout-only change does not
 re-synthesize (CPU OmniVoice runs at roughly a minute per second of speech on a 4-core runner).
 The file name carries a hash of voice mode + text, so editing a `vo` line in `script.json`

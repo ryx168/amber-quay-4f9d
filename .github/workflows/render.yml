@@ -26,6 +26,12 @@ on:
         description: ignore the cached narration and synthesize again
         type: boolean
         default: false
+      takes:
+        description: OmniVoice takes per line; each is checked by Whisper and the best kept (1 = no check)
+        default: "3"
+      only:
+        description: with force_tts, re-synthesize just these shot ids (comma-separated, e.g. bigben,price); empty = all
+        default: ""
 
 permissions:
   contents: write
@@ -41,6 +47,7 @@ jobs:
     env:
       QUALITY: ${{ inputs.quality || 'high' }}
       VOICE: ${{ inputs.voice || 'auto' }}
+      TTS_TAKES: ${{ inputs.takes || '3' }}
       PYTHONUTF8: "1"
       HF_HUB_DISABLE_PROGRESS_BARS: "1"
       TOKENIZERS_PARALLELISM: "false"
@@ -64,14 +71,14 @@ jobs:
         run: |
           python -m pip install -q --upgrade pip
           python -m pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-          python -m pip install -q omnivoice soundfile
+          python -m pip install -q omnivoice soundfile librosa pypinyin
           python -c "import torch, omnivoice; print('torch', torch.__version__, 'omnivoice', getattr(omnivoice, '__version__', '?'))"
 
-      - name: cache the OmniVoice checkpoint (~3.3 GB)
+      - name: cache the OmniVoice + Whisper checkpoints (~5 GB)
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: hf-omnivoice-v1
+          key: hf-omnivoice-whisper-v1
           restore-keys: hf-omnivoice-
 
       - name: cache the synthesized narration
@@ -90,7 +97,8 @@ jobs:
       - name: narration (OmniVoice)
         run: |
           if [ "${{ inputs.force_tts }}" = "true" ]; then F=--force; else F=; fi
-          python build.py tts --voice "$VOICE" $F
+          if [ -n "${{ inputs.only }}" ]; then O="--only ${{ inputs.only }}"; else O=; fi
+          python build.py tts --voice "$VOICE" $F $O
 
       - name: plate + composition
         run: |
@@ -118,13 +126,22 @@ jobs:
           path: |
             out/tour_7622_promo.mp4
             out/contact_sheet.jpg
+            out/tts_qa.json
             timing.json
+          if-no-files-found: warn
 
       - name: attach the MP4 to a release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="run-${{ github.run_number }}"
-          gh release create "$tag" out/tour_7622_promo.mp4 out/contact_sheet.jpg timing.json \
+          files="out/tour_7622_promo.mp4 out/contact_sheet.jpg timing.json"
+          qa="narration: cached, not re-synthesized"
+          if [ -f out/tts_qa.json ]; then
+            files="$files out/tts_qa.json"
+            qa=$(python -c "import json; d=json.load(open('out/tts_qa.json', encoding='utf-8')); L=d['lines']; bad=[l['id'] for l in L if not l['passed']]; print('narration: %d line(s) re-synthesized, %d takes max, %d at or under %.2f%s' % (len(L), d['takes'], len(L)-len(bad), d['threshold'], ('; above: ' + ', '.join(bad)) if bad else ''))")
+          fi
+          gh release create "$tag" $files \
             --repo "$GITHUB_REPOSITORY" --title "Tour 7622 promo $tag" \
-            --notes "quality=$QUALITY voice=$VOICE commit=${{ github.sha }}"
+            --notes "quality=$QUALITY voice=$VOICE commit=${{ github.sha }}
+          $qa"

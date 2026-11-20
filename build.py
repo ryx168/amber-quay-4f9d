@@ -8,7 +8,10 @@
   python build.py render     npx hyperframes render -> out/tour_7622_promo.mp4
 
 Flags: --force (ignore the TTS cache), --voice clone|design|auto (default auto: clone when
-voice/ronnie_ref.wav exists, else design), --quality draft|standard|high (render).
+voice/ronnie_ref.wav exists, else design), --quality draft|standard|high (render),
+--takes N (default 3, env TTS_TAKES; 1 = no Whisper check), --qa-threshold X (default 0.10,
+env TTS_QA_THRESHOLD; pinyin syllable error rate a take must reach to stop early),
+--only id,id (synthesize just these shots). Env PROMO_VO_DIR redirects the narration cache.
 
 Everything is driven by script.json. Shot timing comes from the narration: a shot lasts
 lead + narration + pad (+ the two 0.5 s cross-fades), never shorter than its `min`.
@@ -17,7 +20,7 @@ import hashlib, json, os, shutil, subprocess, sys, wave
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(HERE, "assets")
-VO = os.path.join(ASSETS, "vo")
+VO = os.environ.get("PROMO_VO_DIR") or os.path.join(ASSETS, "vo")   # override for test runs
 BUILD = os.path.join(ASSETS, "build")
 OUT = os.path.join(HERE, "out")
 for d in (VO, BUILD, OUT):
@@ -72,6 +75,9 @@ def tts(force=False):
             continue
         key = hashlib.sha1(f"{mode}|{lang}|{speed}|{s['vo']}".encode("utf-8")).hexdigest()[:14]
         s["_wav"] = os.path.join(VO, f"{s['id']}_{key}.wav")
+        only = arg("--only")
+        if only and s["id"] not in only.split(","):
+            continue
         if force or not os.path.exists(s["_wav"]):
             todo.append(s)
     print(f"voice={mode} speed={speed} lang={lang}: {len(todo)} line(s) to synthesize, "
@@ -93,10 +99,47 @@ def tts(force=False):
         kw["voice_clone_prompt"] = model.create_voice_clone_prompt(REF_WAV, ref_text=ref_text)
     else:
         kw["instruct"] = VOICE["instruct_fallback"]
+    # OmniVoice samples randomly, so one take can be slurred where the next is clean. With
+    # --takes N > 1 every take is transcribed by Whisper and scored on pinyin (tts_qa.py); the first
+    # take at or under the threshold wins, otherwise the best of N is kept.
+    takes = max(1, int(arg("--takes", os.environ.get("TTS_TAKES", "3"))))
+    threshold = float(arg("--qa-threshold", os.environ.get("TTS_QA_THRESHOLD", "0.10")))
+    checker = None
+    if takes > 1:
+        import tts_qa
+        checker = tts_qa.Checker(language=lang)
+    report = []
     for s in todo:
-        audio = model.generate(text=s["vo"], language=lang, speed=speed, **kw)
-        sf.write(s["_wav"], audio[0], SR)
-        print(f"  {s['id']:10s} {len(audio[0]) / SR:5.2f}s  {s['vo']}")
+        best = None
+        for k in range(takes):
+            audio = model.generate(text=s["vo"], language=lang, speed=speed, **kw)
+            tmp = s["_wav"] + f".take{k}.wav"
+            sf.write(tmp, audio[0], SR)
+            if checker is None:
+                best = (0.0, tmp, "", k)
+                break
+            heard = checker.transcribe(tmp)
+            sc = tts_qa.score(s["vo"], heard)
+            print(f"  {s['id']:10s} take{k} {len(audio[0]) / SR:5.2f}s  err={sc:.3f}  heard: {heard}", flush=True)
+            if best is None or sc < best[0]:
+                if best is not None:
+                    os.remove(best[1])
+                best = (sc, tmp, heard, k)
+            else:
+                os.remove(tmp)
+            if sc <= threshold:
+                break
+        os.replace(best[1], s["_wav"])
+        report.append(dict(id=s["id"], text=s["vo"], take=best[3], error=round(best[0], 3), heard=best[2],
+                           passed=best[0] <= threshold))
+        flag = "" if best[0] <= threshold else "   <-- best of %d still above %.2f" % (takes, threshold)
+        print(f"  {s['id']:10s} kept take{best[3]}  err={best[0]:.3f}  {s['vo']}{flag}", flush=True)
+    with open(os.path.join(OUT, "tts_qa.json"), "w", encoding="utf-8") as f:
+        json.dump(dict(takes=takes, threshold=threshold, lines=report), f, ensure_ascii=False, indent=1)
+    failed = [r["id"] for r in report if not r["passed"]]
+    if checker is not None:
+        print(f"tts qa: {len(report) - len(failed)}/{len(report)} lines at or under {threshold}"
+              + (f"; above: {', '.join(failed)}" if failed else ""))
 
 
 def trim_silence(path, thresh=500, keep=0.15):
@@ -245,7 +288,15 @@ def render():
 
 
 if __name__ == "__main__":
-    steps = [a for a in sys.argv[1:] if not a.startswith("--") and a not in ("clone", "design", "auto", "draft", "standard", "high")]
+    VALUED = {"--voice", "--quality", "--takes", "--qa-threshold", "--only"}   # flags that consume the next word
+    steps, skip = [], False
+    for a in sys.argv[1:]:
+        if skip:
+            skip = False
+        elif a in VALUED:
+            skip = True
+        elif not a.startswith("--"):
+            steps.append(a)
     if not steps:
         print(__doc__); sys.exit(0)
     if "all" in steps:
